@@ -5,23 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asynchronous demo</title>
     <script>
-        async function loaduserDetails(username){
+        async function loaduserDetails(){
             try{
-                const url=`https://api.github.com/users/${username}`;
-                const res=await fetch(url);
-                const data=await res.json();
-                document.getElementById("para1").innerText=data.name;
-                document.getElementById("para1").style.color="red";
-                console.log(data);
+                const url=`https://dummyjson.com/recipes`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+            const container = document.getElementById("recipes");
+
+            data.recipes.forEach(recipe => {
+                const p = document.createElement("p");
+                p.innerText = recipe.name;
+                container.appendChild(p);
+            });
+                   
+                
             }
             catch(err){
                 console.log("Error:",err);
             }
         }
-        loaduserDetails("Kashviisharma");
+        loaduserDetails("ManviSohi");
     </script>
 </head>
 <body>
-    <h1 id="para1">GitHub Api</h1>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronous demo</title>
+    <script>
+        async function loaduserDetails(){
+            try{
+                const url=`https://dummyjson.com/recipes`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+            const container = document.getElementById("recipes");
+
+            data.recipes.forEach(recipe => {
+                const p = document.createElement("p");
+                p.innerText = recipe.name;
+                container.appendChild(p);
+            });
+                   
+                
+            }
+            catch(err){
+                console.log("Error:",err);
+            }
+        }
+        loaduserDetails("ManviSohi");
+    </script>
+</head>
+<body>
+    <h1>Recipes</h1>
+    <div id="recipes"></div>
+</body>
+</html>
 </body>
 </html>
