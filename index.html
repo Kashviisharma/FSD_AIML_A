@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synchronous demo</title>
-    <script src="./promisedemo.js"></script>
+    <title>Asynchronous demo</title>
+    <script>
+        async function loaduserDetails(username){
+            try{
+                const url=`https://api.github.com/users/${username}`;
+                const res=await fetch(url);
+                const data=await res.json();
+                document.getElementById("para1").innerText=data.name;
+                document.getElementById("para1").style.color="red";
+                console.log(data);
+            }
+            catch(err){
+                console.log("Error:",err);
+            }
+        }
+        loaduserDetails("Kashviisharma");
+    </script>
 </head>
 <body>
-    
+    <h1 id="para1">GitHub Api</h1>
 </body>
 </html>
