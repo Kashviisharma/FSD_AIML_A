@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GitHub Repository Search</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .profile {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 15px 30px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .repo {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .repo h2 {
+            margin-top: 0;
+        }
+
+        .repo a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .repo a:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>GitHub Repository Search</h1>
+
+
+        <!-- Profile -->
+        <div id="profile" class="profile">
+            Loading profile...
+        </div>
+
+
+        <!-- Repository Search -->
+        const express = require("express");
+const mysql = require("mysql2");
+
+const app = express();
+
+app.use(express.json());
+
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "your_password",
+    database: "hotel_booking"
+});
+
+db.connect((err) => {
+    if (err) {
+        console.log("Database connection failed:", err);
+    } else {
+        console.log("MySQL connected!");
+    }
+});
+
+
+
+        <!-- Repository Results -->
+        <div id="result">
+            Loading repositories...
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const USERNAME = "Kashviisharma";
+
+        const PROFILE_URL =
+            `https://api.github.com/users/${USERNAME}`;
+
+        const REPO_URL =
+            `https://api.github.com/users/${USERNAME}/repos`;
+
+
+        let repositories = [];
+
+
+        // -----------------------------
+        // LOAD PROFILE
+        // -----------------------------
+
+        async function loadProfile() {
+
+            try {
+
+                const response = await fetch(PROFILE_URL);
+
+                if (!response.ok) {
+                    throw new Error("GitHub profile not found");
+                }
+
+                const data = await response.json();
+
+                console.log("Profile:", data);
+
+
+                document.getElementById("profile").innerHTML = `
+
+                    <img
+                        src="${data.avatar_url}"
+                        alt="${data.login}"
+                    >
+
+                    <h2>${data.name ?? data.login}</h2>
+
+                    <p>@${data.login}</p>
+
+                    <p>
+                        ${data.bio ?? "No bio available"}
+                    </p>
+
+                    <p>
+                        Repositories: ${data.public_repos}
+                        |
+                        Followers: ${data.followers}
+                        |
+                        Following: ${data.following}
+                    </p>
+
+                `;
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                document.getElementById("profile").innerHTML = `
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+
+
+        // -----------------------------
+        // LOAD REPOSITORIES
+        // -----------------------------
+
+        async function loadRepositories() {
+
+            try {
+
+                const response = await fetch(REPO_URL);
+
+                if (!response.ok) {
+                    throw new Error("Repositories could not be loaded");
+                }
+
+                repositories = await response.json();
+
+                console.log("Repositories:", repositories);
+
+
+                // Show all repositories initially
+                displayRepositories(repositories);
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                document.getElementById("result").innerHTML = `
+                    <p class="message">
+                        ${error.message}
+                    </p>
+                `;
+            }
+        }
+
+
+        // -----------------------------
+        // DISPLAY REPOSITORIES
+        // -----------------------------
+
+        function displayRepositories(repoList) {
+
+            const result =
+                document.getElementById("result");
+
+
+            if (repoList.length === 0) {
+
+                result.innerHTML = `
+                    <p class="message">
+                        No repositories found.
+                    </p>
+                `;
+
+                return;
+            }
+
+
+            result.innerHTML = repoList.map(repo => `
+
+                <div class="repo">
+
+                    <h2>
+                        ${repo.name}
+                    </h2>
+
+                    <p>
+                        ${repo.description ??
+                        "No description available"}
+                    </p>
+
+                    <p>
+                        Language:
+                        ${repo.language ?? "Not specified"}
+                    </p>
+
+                    <p>
+                        ⭐ ${repo.stargazers_count}
+                        &nbsp;&nbsp;
+
+                        🍴 ${repo.forks_count}
+                    </p>
+
+                    <p>
+                        Updated:
+                        ${new Date(
+                            repo.updated_at
+                        ).toLocaleDateString()}
+                    </p>
+
+                    <a
+                        href="${repo.html_url}"
+                        target="_blank"
+                    >
+                        View Repository →
+                    </a>
+
+                </div>
+
+            `).join("");
+        }
+
+
+        // -----------------------------
+        // SEARCH REPOSITORY
+        // -----------------------------
+
+        function searchRepo() {
+
+            const searchText =
+                document
+                    .getElementById("search")
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+
+            // If search is empty,
+            // show all repositories
+            if (searchText === "") {
+
+                displayRepositories(repositories);
+
+                return;
+            }
+
+
+            const matches = repositories.filter(repo =>
+
+                repo.name
+                    .toLowerCase()
+                    .includes(searchText)
+
+            );
+
+
+            displayRepositories(matches);
+        }
+
+
+        // -----------------------------
+        // SEARCH WHEN PRESSING ENTER
+        // -----------------------------
+
+        document
+            .getElementById("search")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+
+                    searchRepo();
+
+                }
+
+            });
+
+
+        // -----------------------------
+        // START APPLICATION
+        // -----------------------------
+
+        loadProfile();
+
+        loadRepositories();
+
+    </script>
+
+</body>
+
+</html>
