@@ -1,3 +1,5 @@
 function Book(props){
-    const div=React.
+    return{
+        <img src="" width="100px" height="100px"
+    }
 }
