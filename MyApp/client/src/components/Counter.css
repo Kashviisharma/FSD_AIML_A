@@ -1,0 +1,565 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #070910;
+  color: #ffffff;
+}
+
+.counter-app {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(99, 102, 241, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(139, 92, 246, 0.15),
+      transparent 35%
+    ),
+    #070910;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.counter-card {
+  width: min(520px, 100%);
+
+  padding: 32px;
+
+  border-radius: 30px;
+
+  background: rgba(18, 22, 35, 0.82);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 35px 90px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.counter-header {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.header-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  font-size: 25px;
+
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #8b5cf6
+  );
+
+  box-shadow:
+    0 8px 25px rgba(99, 102, 241, 0.3);
+}
+
+.eyebrow {
+  margin: 0 0 2px;
+
+  color: #6366f1;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.counter-header h1 {
+  margin: 0;
+
+  font-size: 24px;
+  letter-spacing: -0.7px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 10px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  background: rgba(255, 255, 255, 0.04);
+  color: #8b93a7;
+}
+
+.status span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #6b7280;
+}
+
+.status.positive {
+  color: #4ade80;
+}
+
+.status.positive span {
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
+}
+
+.status.negative {
+  color: #fb7185;
+}
+
+.status.negative span {
+  background: #fb7185;
+  box-shadow: 0 0 10px #fb7185;
+}
+
+.status.neutral {
+  color: #94a3b8;
+}
+
+/* =========================
+   DISPLAY
+========================= */
+
+.counter-display {
+  margin-top: 30px;
+
+  padding: 35px 20px 25px;
+
+  text-align: center;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.015)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow:
+    inset 0 1px 15px rgba(255, 255, 255, 0.015);
+}
+
+.display-label {
+  color: #667085;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.count-number {
+  margin: 8px 0;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+
+  font-size: clamp(75px, 17vw, 120px);
+
+  line-height: 1;
+
+  font-weight: 600;
+
+  letter-spacing: -7px;
+
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease,
+    transform 0.15s ease;
+}
+
+.count-number.positive {
+  color: #a5b4fc;
+
+  text-shadow:
+    0 0 35px rgba(99, 102, 241, 0.25);
+}
+
+.count-number.negative {
+  color: #fb7185;
+
+  text-shadow:
+    0 0 35px rgba(244, 63, 94, 0.25);
+}
+
+.count-number.zero {
+  color: #f8fafc;
+}
+
+.count-info {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+
+  color: #596276;
+
+  font-size: 10px;
+}
+
+/* =========================
+   MAIN CONTROLS
+========================= */
+
+.main-controls {
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 25px;
+}
+
+.control-btn {
+  height: 62px;
+
+  border: none;
+  border-radius: 17px;
+
+  color: white;
+
+  font-size: 34px;
+  font-weight: 300;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.control-btn:hover {
+  transform: translateY(-3px);
+}
+
+.control-btn:active {
+  transform: scale(0.96);
+}
+
+.decrease {
+  background: linear-gradient(
+    135deg,
+    #be123c,
+    #e11d48
+  );
+
+  box-shadow:
+    0 10px 25px rgba(225, 29, 72, 0.2);
+}
+
+.increase {
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #8b5cf6
+  );
+
+  box-shadow:
+    0 10px 25px rgba(99, 102, 241, 0.25);
+}
+
+.reset-button {
+  height: 45px;
+
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  border-radius: 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.05);
+
+  color: #cbd5e1;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.reset-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.reset-icon {
+  font-size: 16px;
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-actions {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 9px;
+
+  margin-top: 14px;
+}
+
+.quick-actions button {
+  height: 38px;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  border-radius: 11px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  color: #8992a5;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.quick-actions button:hover {
+  color: white;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  transform: translateY(-1px);
+}
+
+/* =========================
+   STEP SECTION
+========================= */
+
+.step-section {
+  margin-top: 28px;
+
+  padding-top: 24px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 12px;
+
+  color: #697386;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.section-heading strong {
+  color: #a5b4fc;
+
+  font-size: 12px;
+
+  letter-spacing: 0;
+}
+
+.step-options {
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 8px;
+}
+
+.step-options button {
+  height: 38px;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  color: #778196;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.step-options button:hover {
+  color: white;
+
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.step-options .active-step {
+  color: white;
+
+  border-color: rgba(99, 102, 241, 0.5);
+
+  background: rgba(99, 102, 241, 0.18);
+
+  box-shadow:
+    inset 0 0 15px rgba(99, 102, 241, 0.08);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.counter-footer {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 25px;
+
+  color: #596276;
+
+  font-size: 10px;
+}
+
+.counter-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.keyboard-key {
+  min-width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.05);
+
+  color: #9aa3b5;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+  .counter-app {
+    padding: 15px;
+  }
+
+  .counter-card {
+    padding: 23px 18px;
+
+    border-radius: 25px;
+  }
+
+  .counter-header h1 {
+    font-size: 21px;
+  }
+
+  .status {
+    padding: 6px 8px;
+    font-size: 8px;
+  }
+
+  .counter-display {
+    margin-top: 23px;
+    padding: 30px 10px 22px;
+  }
+
+  .count-number {
+    font-size: 78px;
+  }
+
+  .main-controls {
+    gap: 8px;
+  }
+
+  .control-btn {
+    height: 56px;
+  }
+
+  .reset-button {
+    padding: 0 12px;
+  }
+
+  .counter-footer {
+    font-size: 9px;
+  }
+}
